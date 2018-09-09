@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
-
 @author: mylinux
 
-This is a temporary script file.
+Uses numpy, matplotlib and scipy 
+for simple dsp techniques
+
 """
 
 import DSP as dsp
@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import scipy.io.wavfile
 
 # Variables for Sampling Frequency, time value,
-# number of data points & FFT coefficients
+# number of data points & nomber of FFT coefficients
 Fs=500.0; T=1/Fs; Nd=500; Nfft=2000;
 
 # Array of two signal frequencies 55 & 100 Hz
@@ -32,20 +32,20 @@ time=n*T
 w0=2*np.pi*freq[0]/Fs
 w1=2*np.pi*freq[1]/Fs
 
-# signals that are combined together
-signal_sin_0=Amp[0]*np.sin(w0*n)
-signal_sin_1=Amp[1]*np.sin(w1*n)
+# sinusoidal signals that are combined together
+signal_sin_0 = Amp[0]*np.sin(w0*n)
+signal_sin_1 = Amp[1]*np.sin(w1*n)
 
 # DC offset
-dc_sig=np.ones(Nd)*1
+dc_sig = np.ones(Nd)*1
 
 
 # Addititve white Gaussian noise
-awgn=np.random.random(Nd)*5
+awgn = np.random.random(Nd)*5
 
 
 # combine signals, awgn & noise
-sig=signal_sin_0 + signal_sin_1 +dc_sig  + awgn
+sig = signal_sin_0 + signal_sin_1 +dc_sig  + awgn
 
 
 
@@ -67,23 +67,23 @@ dsp.plotFFT(sig, Fs, Nfft, Nd)
 # initialise parameters for an elliptic low-pass
 
 # filter order
-elip_order=4
+elip_order = 4
 
 # pass-band ripple
-elip_pbr=0.5
+elip_pbr = 0.5
 
 #minimum stop-band attenuation
-elip_msba=40
+elip_msba = 40
 
 # Cut frequency
-elip_fCut=60
+elip_fCut = 60
 
 # Frequency type
 elip_Type='low'
 
 
 # call  filter design function to obtain b, a coefficients
-b,a=dsp.designEllip(Fs, elip_order, elip_pbr, elip_fCut, elip_msba, elip_Type)
+b, a = dsp.designEllip(Fs, elip_order, elip_pbr, elip_fCut, elip_msba, elip_Type)
 
 
 #plot amplitude response of the filter

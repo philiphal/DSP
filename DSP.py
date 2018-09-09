@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Jul 28 14:01:56 2018
-
 @author: mylinux
+
+Uses numpy, matplotlib and scipy 
+for simple dsp techniques
+
 
 Filtering and FFT Functionality
 
@@ -15,14 +17,14 @@ from scipy import signal
 '''	                           FFT FUNCTION                             '''
 '''**********************************************************************'''
 def plotFFT(sig, Fs, Nfft, Nd):
-    X=np.fft.fft(sig,Nfft)
-    Xmag=np.abs(X[0:int(Nfft/2)])
+    X = np.fft.fft(sig,Nfft)
+    Xmag = np.abs(X[0:int(Nfft/2)])
     ''' calibrate for amplitude'''
-    Xcal=Xmag*2/Nd
+    Xcal = Xmag*2/Nd
     ''' calibrate for freq spacing '''
-    freqSpacing=Fs/Nfft
+    freqSpacing = Fs/Nfft
     ''' scale x-axis with freqspacing '''
-    f=np.arange(0,Nfft/2)*freqSpacing
+    f = np.arange(0,Nfft/2)*freqSpacing
     ''' plot (x,y) '''
     plt.figure()
     plt.plot(f,(Xcal),'r')
@@ -35,8 +37,9 @@ def plotFFT(sig, Fs, Nfft, Nd):
 '''                     DC notch to remove DC offset                     ''' 
 '''**********************************************************************'''
 def dcNotch():
-    b=np.array([1.0,-1.0])
-    a=np.array([1.0,-0.95])
+    b = np.array([1.0,-1.0])
+    a = np.array([1.0,-0.95])
+    
     return(b,a)
     
 
@@ -45,13 +48,14 @@ def dcNotch():
 '''                     (can be used to generate envelope)               ''' 
 '''**********************************************************************'''    
 def firstOrderRecursive():
-    b=np.array([0.001])
-    a=np.array([1.0,-0.999])
+    b = np.array([0.001])
+    a = np.array([1.0,-0.999])
+    
     return(b,a)
     
 
 '''**********************************************************************'''
-'''                         User defined Butterworth                     ''' 
+'''             returns b, a coefficients for a Butterworth              ''' 
 '''**********************************************************************'''
 def designButterWorth(filter_order, fCut, Fs, Type):
     nyquist = 0.5 * Fs
@@ -61,7 +65,7 @@ def designButterWorth(filter_order, fCut, Fs, Type):
     
    
 '''**********************************************************************'''
-'''             returns b,a coefficients for an eliptic                  ''' 
+'''             returns b,a coefficients for an Eliptic                  ''' 
 '''**********************************************************************'''    
 def designEllip(Fs,filter_order, filter_pbr,fCut, filter_msba,Type): 
     '''elliptic filter parameters '''
