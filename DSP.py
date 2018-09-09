@@ -10,8 +10,6 @@ Filtering and FFT Functionality
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
-import scipy.io as io
-import scipy.io.wavfile
 
 '''**********************************************************************'''
 '''	                           FFT FUNCTION                             '''
@@ -34,7 +32,7 @@ def plotFFT(sig, Fs, Nfft, Nd):
     plt.title(' Calibrated %d point FFT'%(Nfft))
 
 '''**********************************************************************'''
-'''                     dc notch to remove DC offset                     ''' 
+'''                     DC notch to remove DC offset                     ''' 
 '''**********************************************************************'''
 def dcNotch():
     b=np.array([1.0,-1.0])
@@ -43,7 +41,8 @@ def dcNotch():
     
 
 '''**********************************************************************'''
-'''             First order recursive for smoothing rectified signal     ''' 
+'''             First order recursive for smoothing rectified signal     '''
+'''                     (can be used to generate envelope)               ''' 
 '''**********************************************************************'''    
 def firstOrderRecursive():
     b=np.array([0.001])
@@ -54,21 +53,21 @@ def firstOrderRecursive():
 '''**********************************************************************'''
 '''                         User defined Butterworth                     ''' 
 '''**********************************************************************'''
-def designButterWorth(order, fCut, Fs, Type):
-    nyq = 0.5 * Fs
-    normal_cutoff = fCut/nyq
-    b, a = signal.butter(order, normal_cutoff, btype=Type)
+def designButterWorth(filter_order, fCut, Fs, Type):
+    nyquist = 0.5 * Fs
+    normal_cutoff = fCut/nyquist
+    b, a = signal.butter(filter_order, normal_cutoff, btype=Type)
     return (b,a)
     
    
 '''**********************************************************************'''
 '''             returns b,a coefficients for an eliptic                  ''' 
 '''**********************************************************************'''    
-def designEllip(Fs,order,pbr,fCut,msba,Type): 
+def designEllip(Fs,filter_order, filter_pbr,fCut, filter_msba,Type): 
     '''elliptic filter parameters '''
-    nyq = 0.5 * Fs
-    normal_cutoff = fCut/nyq
-    b,a=signal.ellip(order, pbr, msba, normal_cutoff, btype=Type)   
+    nyquist = 0.5 * Fs
+    normal_cutoff = fCut/nyquist
+    b,a=signal.ellip(filter_order, filter_pbr, filter_msba, normal_cutoff, btype=Type)   
     return (b,a)
     
     
@@ -76,7 +75,7 @@ def designEllip(Fs,order,pbr,fCut,msba,Type):
 '''              Plots amplitude response of b,a coefficents           ''' 
 '''********************************************************************'''  
 def plotAmplitudeResponse(b,a, Fs):
-    w, h = signal.freqz(b,a,50)
+    w, h = signal.freqz(b, a, 50)
     plt.plot((Fs*0.5/np.pi)*w,  20*np.log10(np.abs(h)), 'b')
     plt.xlabel('Frequency [Hz]')
     plt.ylabel('Magnitude [dB]')
