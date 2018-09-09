@@ -45,7 +45,7 @@ awgn = np.random.random(Nd)*5
 
 
 # combine signals, awgn & noise
-sig = signal_sin_0 + signal_sin_1 +dc_sig  + awgn
+sig = signal_sin_0 + signal_sin_1 + dc_sig + awgn
 
 
 

@@ -78,7 +78,7 @@ def designEllip(Fs,filter_order, filter_pbr,fCut, filter_msba,Type):
 '''********************************************************************'''
 '''              Plots amplitude response of b,a coefficents           ''' 
 '''********************************************************************'''  
-def plotAmplitudeResponse(b,a, Fs):
+def plotAmplitudeResponse(b, a, Fs):
     w, h = signal.freqz(b, a, 50)
     plt.plot((Fs*0.5/np.pi)*w,  20*np.log10(np.abs(h)), 'b')
     plt.xlabel('Frequency [Hz]')
