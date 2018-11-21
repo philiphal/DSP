@@ -37,7 +37,8 @@ signal_sin_0 = Amp[0]*np.sin(w0*n)
 signal_sin_1 = Amp[1]*np.sin(w1*n)
 
 # DC offset
-dc_sig = np.ones(Nd)*1
+dc_level = 5.0
+dc_sig = np.ones(Nd)*dc_level
 
 
 # Addititve white Gaussian noise
