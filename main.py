@@ -17,10 +17,10 @@ import scipy.io.wavfile
 Fs=500.0; T=1/Fs; Nd=500; Nfft=2000;
 
 # Array of two signal frequencies 55 & 100 Hz
-freq=np.array([55,100]);
+freq=np.array([55,100,125]);
 
 # Array of two signal amplitudes 3 & 5 Au
-Amp=np.array([3.0,5.0]);
+Amp=np.array([3.0,5.0,4.0]);
 
 # data point vector
 n=np.arange(0,Nd)
